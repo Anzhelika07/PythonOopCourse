@@ -4,11 +4,11 @@ start = float(input("Введите начальную точку числово
 end = float(input("Введите конечную точку числового диапазона: "))
 number = float(input("Введите вещественное число: "))
 
-range = Range(start, end)
+entered_range= Range(start, end)
 
-if range.is_inside(number):
+if entered_range.is_inside(number):
     print("Введенное число принадлежит диапазону")
 else:
     print("Введенное число не принадлежит диапазону")
 
-print(f"Длина диапазона = {range.get_length()}")
+print(f"Длина диапазона = {entered_range.get_length()}")

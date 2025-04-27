@@ -10,17 +10,22 @@ end_2 = float(input("Введите конечную точку второго �
 
 range_2 = Range(start_2, end_2)
 
-if range_1.get_intersection(range_2) is None:
+intersection = range_1.get_intersection(range_2)
+
+if intersection is None:
     print("Пересечения диапазонов нет")
 else:
-    print(f"Диапазон пересечения имеет границы {range_1.get_intersection(range_2)}")
+    print(f"Диапазон пересечения имеет границы {intersection}")
 
-union_ranges_list = range_1.get_union(range_2)
+union = range_1.get_union(range_2)
 
-for range in union_ranges_list:
-    print(f"Диапазон объединения имеет границы: ({range.start}, {range.end})")
+for union_range in union:
+    print(f"Диапазон объединения имеет границы: ({union_range.start}, {union_range.end})")
 
-difference_ranges_list = range_1.get_difference(range_2)
+difference = range_1.get_difference(range_2)
 
-for range in difference_ranges_list:
-    print(f"Разность диапазонов имеет границы: ({range.start}, {range.end})")
+if difference is None:
+    print("Разность найти невозможно.")
+else:
+    for difference_range in difference:
+        print(f"Разность диапазонов имеет границы: ({difference_range.start}, {difference_range.end})")
