@@ -13,7 +13,7 @@ range_2 = Range(start_2, end_2)
 intersection = range_1.get_intersection(range_2)
 
 if intersection is None:
-    print("Пересечения диапазонов нет")
+    print("Пересечения диапазонов нет.")
 else:
     print(f"Диапазон пересечения имеет границы {intersection}")
 
@@ -24,8 +24,8 @@ for union_range in union:
 
 difference = range_1.get_difference(range_2)
 
-if difference is None:
-    print("Разность найти невозможно.")
+if len(difference) == 0:
+    print("Разность диапазонов пустая.")
 else:
     for difference_range in difference:
         print(f"Разность диапазонов имеет границы: ({difference_range.start}, {difference_range.end})")

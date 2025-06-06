@@ -29,31 +29,31 @@ class Range:
         max_start = max(self.__start, other_range.start)
         min_end = min(other_range.end, self.__end)
 
-        if other_range.start >= self.__start and other_range.end <= self.__end:
-            return Range(max_start, min_end)
+        if self.__start > other_range.start or self.__end < other_range.end:
+            return None
 
-        return None
+        return Range(max_start, min_end)
 
     def get_union(self, other_range):
         min_start = min(self.__start, other_range.start)
         max_end = max(other_range.end, self.__end)
 
-        if self.__start and self.__end < other_range.start:
+        if self.__end < other_range.start or other_range.end < self.__start:
             return [Range(self.__start, self.__end), Range(other_range.start, other_range.end)]
-        elif other_range.start and other_range.end < self.__start:
-            return [Range(other_range.start, other_range.end), Range(self.__start, self.__end)]
 
         return [Range(min_start, max_end)]
 
     def get_difference(self, other_range):
         if other_range.start > self.__start and other_range.end < self.__end:
             return [Range(self.__start, other_range.start), Range(other_range.end, self.__end)]
-        elif other_range.start == self.__start and other_range.end < self.__end:
+
+        if other_range.start == self.__start and other_range.end < self.__end:
             return [Range(other_range.end, self.__end)]
+
         if other_range.start > self.__start and other_range.end == self.__end:
             return [Range(self.__start, other_range.start)]
 
-        return  None
+        return []
 
     def __repr__(self):
         return f"({self.__start}; {self.__end})"
