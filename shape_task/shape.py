@@ -43,6 +43,15 @@ class Square(Shape):
     def __repr__(self):
         return f"({self.__side_length})"
 
+    def __hash__(self):
+        return self.side_length
+
+    def __eq__(self, other):
+        if not isinstance(other, type(self)):
+            return NotImplemented
+
+        return self.__side_length == other.__side_length
+
 
 class Triangle(Shape):
     def __init__(self, x1, y1, x2, y2, x3, y3):
@@ -97,6 +106,17 @@ class Triangle(Shape):
     def __repr__(self):
         return f"({self.__x1}; {self.__y1}; {self.__x2}; {self.__y2}; {self.__x3}; {self.__y3})"
 
+    def __hash__(self):
+        return hash((self.__x1, self.__y1, self.__x2, self.__y2, self.__x3, self.__y3,))
+
+    def __eq__(self, other):
+        if not isinstance(other, type(self)):
+            return NotImplemented
+
+        return (self.__x1 == other.__x1 and self.__y1 == other.__y1
+                and self.__x2 == other.__x2 and self.__y2 == other.__y2
+                and self.__x3 == other.__x3 and self.__y3 == other.__y3)
+
 
 class Rectangle(Shape):
     def __init__(self, width, length):
@@ -126,6 +146,16 @@ class Rectangle(Shape):
     def __repr__(self):
         return f"({self.__width}; {self.__length})"
 
+    def __hash__(self):
+        return hash((self.__width, self.__length))
+
+    def __eq__(self, other):
+        if not isinstance(other, type(self)):
+            return NotImplemented
+
+        return self.__width == other.__width and self.__length == other.__length
+
+
 class Circle(Shape):
     def __init__(self, radius):
         self.__radius = radius
@@ -148,3 +178,12 @@ class Circle(Shape):
 
     def __repr__(self):
         return f"({self.__radius})"
+
+    def __hash__(self):
+        return self.__radius
+
+    def __eq__(self, other):
+        if not isinstance(other, type(self)):
+            return NotImplemented
+
+        return self.__radius == other.__radius
