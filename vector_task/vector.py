@@ -70,3 +70,9 @@ class Vector:
     def __rmul__(self, scalar):
         return self.__mul__(scalar)
 
+    def get_item(self, index):
+        if not 0 <= index < self.dimension:
+            raise IndexError("Индекс выходит за пределы диапазона")
+        return self._components[index]
+
+
