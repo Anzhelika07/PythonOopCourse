@@ -9,9 +9,9 @@ class Vector:
                 if arg <= 0:
                     raise ValueError("Размерность должна быть положительной")
                 self._components = [0.0] * arg
-            if isinstance(arg, (list, tuple)):
+            elif isinstance(arg, (list, tuple)):
                 self._components = [float(x) for x in arg]
-            if isinstance(arg, Vector):
+            elif isinstance(arg, Vector):
                 self._components = arg._components.copy()
             else:
                 raise TypeError("Неподдерживаемый тип аргумента")
@@ -46,8 +46,8 @@ class Vector:
     @staticmethod
     def _align_components(v1, v2):
         max_dim = max(v1.dimension, v2.dimension)
-        comp1 = v1.components + [0.0] * (max_dim - v1.dimension)
-        comp2 = v2.components + [0.0] * (max_dim - v2.dimension)
+        comp1 = v1._components + [0.0] * (max_dim - v1.dimension)
+        comp2 = v2._components + [0.0] * (max_dim - v2.dimension)
         return comp1, comp2
 
     def __add__(self, other):
@@ -70,9 +70,31 @@ class Vector:
     def __rmul__(self, scalar):
         return self.__mul__(scalar)
 
-    def get_item(self, index):
+    def __getitem__(self, index):
         if not 0 <= index < self.dimension:
             raise IndexError("Индекс выходит за пределы диапазона")
         return self._components[index]
 
+    def __setitem__(self, index, value):
+        if not 0 <= index < self.dimension:
+            return IndexError("Индекс выходит за пределы диапазона")
+        self._components[index] = float(value)
 
+    def __eq__(self, other):
+        if not isinstance(other, Vector):
+            return False
+        if self.dimension != other.dimension:
+            return False
+        return all(a == b for a, b in zip(self._components, other._components))
+
+    def __hash__(self):
+        return hash(tuple(self._components))
+
+    def negate(self):
+        self._components = [-x for x in self._components]
+
+    def dot_product(self, other):
+        if not isinstance(other, Vector):
+            raise TypeError("Неподдерживаемый тип аргумента")
+        comp1, comp2 = Vector._align_components(self, other)
+        return sum(a * b for a, b in zip(comp1, comp2))
